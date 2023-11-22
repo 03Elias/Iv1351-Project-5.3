@@ -150,6 +150,30 @@ ON individual
 FOR EACH ROW
 EXECUTE FUNCTION set_default_students_for_individual();
 
+--student_count updated from student_lesson_cross_reference (TRIGGER)
+CREATE OR REPLACE FUNCTION update_student_count()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE lesson
+  SET student_count = (
+    SELECT COUNT(slcr.student_id)
+    FROM student_lesson_cross_reference slcr
+    WHERE slcr.lesson_id = NEW.lesson_id
+  )
+  WHERE lesson_id = NEW.lesson_id;
+
+  IF (
+    SELECT COUNT(slcr.student_id)
+    FROM student_lesson_cross_reference slcr
+    WHERE slcr.lesson_id = NEW.lesson_id
+  ) > (SELECT max_students FROM lesson WHERE lesson_id = NEW.lesson_id) THEN
+    RAISE EXCEPTION 'Lesson is full. Cannot add more students.';
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE TRIGGER update_student_count_trigger
 AFTER INSERT OR UPDATE
 ON student_lesson_cross_reference
@@ -194,29 +218,7 @@ FOR EACH ROW
 EXECUTE FUNCTION symmetrical_sibling_delete_trigger();
 
 
---student_count updated from student_lesson_cross_reference (TRIGGER)
-CREATE OR REPLACE FUNCTION update_student_count()
-RETURNS TRIGGER AS $$
-BEGIN
-  UPDATE lesson
-  SET student_count = (
-    SELECT COUNT(slcr.student_id)
-    FROM student_lesson_cross_reference slcr
-    WHERE slcr.lesson_id = NEW.lesson_id
-  )
-  WHERE lesson_id = NEW.lesson_id;
 
-  IF (
-    SELECT COUNT(slcr.student_id)
-    FROM student_lesson_cross_reference slcr
-    WHERE slcr.lesson_id = NEW.lesson_id
-  ) > (SELECT max_students FROM lesson WHERE lesson_id = NEW.lesson_id) THEN
-    RAISE EXCEPTION 'Lesson is full. Cannot add more students.';
-  END IF;
-
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION time_available_booked_function()
 RETURNS TRIGGER AS $$
