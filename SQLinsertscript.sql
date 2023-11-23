@@ -1,4 +1,4 @@
---iv1351 insertion script--
+--iv1351 insertion script-- Participants: Elias Gaghlasian, Leo Långberg, Ammar Alzeno CINTE Year 2
 
 --insert all people into person 
 INSERT INTO person (name, contact_details_tlf, personal_number, address)
