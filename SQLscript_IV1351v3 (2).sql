@@ -1,4 +1,4 @@
--- Database: iv1351
+-- Database: iv1351 -- Participants: Leo Långberg, Ammar Alzeno, Elias Gaghlasian 
 
 CREATE TYPE genre     AS ENUM('Classical', 'Jazz', 'Pop', 'Rock');
 CREATE TYPE instrumentals AS ENUM('Piano', 'Guitar', 'Bass', 'Drums', 'Violin', 'Saxophone', 'Trumpet', 'Flute');
