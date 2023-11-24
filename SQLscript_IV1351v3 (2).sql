@@ -8,7 +8,7 @@ CREATE TYPE difficulty AS ENUM('Beginner','Intermediate','Advanced');
 CREATE TABLE person (
   person_id SERIAL NOT NULL,
   name VARCHAR(100) NOT NULL,
-  contact_details_tlf VARCHAR(100) NOT NULL,
+  contact_details_tlf INT NOT NULL,
   personal_number INT UNIQUE NOT NULL,
   address varchar(100) NOT NULL,
   PRIMARY KEY(person_id)
