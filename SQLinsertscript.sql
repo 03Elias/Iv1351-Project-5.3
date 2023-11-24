@@ -3,10 +3,10 @@
 --insert all people into person 
 INSERT INTO person (name, contact_details_tlf, personal_number, address)
 VALUES
-  ('stud1','070-312-21-43', 20021002, 'studhome 0'),
-  ('stud2','070-312-21-44', 20041004,'studhome 0'),
-  ('instruc1','070-312-21-46', 20021006, 'Adminstreet 1'),
-  ('studparent','070-312-21-47', 19740202, 'studhome 0');
+  ('stud1',070-312-21-43, 20021002, 'studhome 0'),
+  ('stud2',070-312-21-44, 20041004,'studhome 0'),
+  ('instruc1',070-312-21-46, 20021006, 'Adminstreet 1'),
+  ('studparent',070-312-21-47, 19740202, 'studhome 0');
 
 
 
